@@ -94,10 +94,6 @@ A ReadOnly type token can only decrypt secrets of which an id or name are known.
 ./vault-cli secret decrypt <id or description of the secret>
 ```
 
-```shell
-export VAULT_TOKEN="insert-token"
-./vault-cli secret decrypt <yoursecret>
-```
 To get the decrypted secret back to use in an application.
 
 ## Output
