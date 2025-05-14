@@ -4,6 +4,8 @@
 
 Vault-cli is a project to have a light-weight, secure and multi-tenant solution for encrypted password storage. Is uses the Vault Rest API where you can manage your environments, tokens and secrets.
 
+Security is key in the project. All Secure Vaults use unique encryption keys, which are never stored in the database and are only available to the customer.
+
 **Release:**
 
 [![Release Version](https://img.shields.io/github/v/release/previder/vault-cli?label=vault-cli)](https://github.com/previder/vault-cli/releases/latest)
@@ -16,8 +18,6 @@ Vault-cli is a project to have a light-weight, secure and multi-tenant solution 
 
 ![Last publish](https://github.com/previder/vault-cli/actions/workflows/goreleaser.yml/badge.svg)
 
-# Environments
-Security is key in the project. You can create separate environments for your projects or customers. All environments use unique encryption keys, which are never stored in the database and are only available to the customer.
 
 # Tokens
 There are 3 types of tokens, each having its own purpose. The token received from the 
@@ -70,32 +70,32 @@ To create a ReadOnly token for use in a cluster, run the following command:
 ./vault-cli token create --description "ReadOnly token" --type ReadOnly
 ```
 
-## Usage example
-### List all tokens 
+# Usage examples
+## List all tokens 
 *Only available to EnvironmentAdmin type tokens*
 ```shell
 ./vault-cli token list
 ```
 
-### List all secrets
+## List all secrets
 *Only available to ReadWrite type tokens*
 ```shell
 ./vault-cli secret list
 ```
 
-### Create a secret 
+## Create a secret 
 *Only available to ReadWrite type tokens*
 ```shell
 ./vault-cli secret create --description "Example secret" --secret "SuperSecurePassword"
 ```
 
-### Delete a secret
+## Delete a secret
 *Only available to ReadWrite type tokens*
 ```shell
 ./vault-cli secret delete <id or description of the secret>
 ```
 
-### Decrypt a secret
+## Decrypt a secret
 *Only available to ReadWrite and ReadOnly type tokens*
 ```shell
 ./vault-cli secret decrypt <id or description of the secret>
@@ -103,5 +103,5 @@ To create a ReadOnly token for use in a cluster, run the following command:
 
 To get the decrypted secret back to use in an application.
 
-## Output
+# Output
 The default output format is `json`. Lists of environments, tokens and secrets can also be pretty-printed with the `-o pretty` parameter.
