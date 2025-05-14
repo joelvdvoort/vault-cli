@@ -43,10 +43,15 @@ To see all usages, run
 ```shell
 ./vault-cli --help
 ```
-To use the more securely, set the token as an environment variable.
+The token can be used via the command-line itself.
+```shell
+./vault-cli -t <insert-token> secret list
+```
+
+To use a more secure method, set the token as an environment variable once to use it with the client.
 ```shell
 export VAULT_TOKEN="insert-token"
-./vault-cli secret decode <yoursecret>
+./vault-cli secret list
 ```
 
 # Creating tokens for secret management
