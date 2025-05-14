@@ -49,19 +49,21 @@ export VAULT_TOKEN="insert-token"
 ./vault-cli secret decode <yoursecret>
 ```
 
+# Creating tokens for secret management
+## ReadWrite token
+A ReadWrite type token can create, list, get, delete and decrypt secrets.
 To create a ReadWrite token using the EnvironmentAdmin token, run the following command:
 ```shell
 ./vault-cli token create --description "ReadWrite token" --type ReadWrite
 ```
 
-A ReadWrite type token can create, list, get, delete and decrypt secrets.
-
+## ReadOnly token
+A ReadOnly type token can only decrypt secrets of which an id or name are known. This type cannot manage secrets.
 To create a ReadOnly token for use in a cluster, run the following command:
+
 ```shell
 ./vault-cli token create --description "ReadOnly token" --type ReadOnly
 ```
-
-A ReadOnly type token can only decrypt secrets of which an id or name are known. This type cannot manage secrets.
 
 ## Usage example
 ### List all tokens 
