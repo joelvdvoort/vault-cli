@@ -19,17 +19,22 @@ Vault-cli is a project to have a light-weight, secure and multi-tenant solution 
 # Environments
 Security is key in the project. You can create separate environments for your projects or customers. All environments use unique encryption keys, which are never stored in the database and are only available to the customer.
 
-The MasterAdmin token can create an Environment. As a response to this call an EnvironmentAdmin token is returned once. This type of token can be used to create ReadWrite or ReadOnly tokens. Read the section [Tokens](#Tokens) for more detailed view of the different token types.
-
 # Tokens
-There are 4 types of tokens, each having its own purpose.
+There are 3 types of tokens, each having its own purpose. The token received from the 
 
 |                                     	 | EnvironmentAdmin  	 | ReadWrite  	 | ReadOnly   	 |
 |----------------------------------|---------------------|--------------|--------------|
-| Create ReadWrite/ReadOnly token	 | 	      ✅            | 	            | 	            |
+| Manage tokens                  	 | 	      ✅            | 	            | 	            |
 | Manage secrets	                  | 	                   | 	  ✅          | 	            |
 | Get decrypted secret             | 	                   | 	   ✅         | 	    ✅        |
 
+
+The initial token received when a Secure Vault via the Previder Portal is created is of the type EnvironmentAdmin. This type of token can be used to manage ReadWrite or ReadOnly tokens, but not secrets.
+An additional token of the type EnvironmentAdmin can also be created. Use the following command to create a token of type EnvironmentAdmin.
+
+```shell
+./vault-cli -t <insert-token> token create --description "EnvironmentAdmin token" --type EnvironmentAdmin
+```
 
 # Getting started
 Vault-cli is a stand-alone binary to use with the Vault API. 
@@ -38,19 +43,60 @@ To see all usages, run
 ```shell
 ./vault-cli --help
 ```
-
-## Token
-Use the token directly from the command-line or define the VAULT_TOKEN environment variable.
-
-## Usage example
-```shell
-./vault-cli -t <insert-token> secret list
-```
-Will print all secrets in the Vault environment
-
+To use the more securely, set the token as an environment variable.
 ```shell
 export VAULT_TOKEN="insert-token"
 ./vault-cli secret decode <yoursecret>
+```
+
+To create a ReadWrite token using the EnvironmentAdmin token, run the following command:
+```shell
+./vault-cli token create --description "ReadWrite token" --type ReadWrite
+```
+
+A ReadWrite type token can create, list, get, delete and decrypt secrets.
+
+To create a ReadOnly token for use in a cluster, run the following command:
+```shell
+./vault-cli token create --description "ReadOnly token" --type ReadOnly
+```
+
+A ReadOnly type token can only decrypt secrets of which an id or name are known. This type cannot manage secrets.
+
+## Usage example
+```shell
+./vault-cli secret list
+```
+Will print all secrets in the Vault environment
+
+### List all tokens (only available to EnvironmentAdmin type tokens)
+```shell
+./vault-cli token list
+```
+
+### List all secrets (only available to ReadWrite type tokens)
+```shell
+./vault-cli secret list
+```
+
+### Create a secret (only available to ReadWrite type tokens)
+```shell
+./vault-cli secret create --description "Example secret" --secret "SuperSecurePassword"
+```
+
+### Delete a secret (only available to ReadWrite type tokens)
+```shell
+./vault-cli secret delete <id or description of the secret>
+```
+
+### Decrypt a secret (only available to ReadWrite and ReadOnly type tokens)
+```shell
+./vault-cli secret decrypt <id or description of the secret>
+```
+
+```shell
+export VAULT_TOKEN="insert-token"
+./vault-cli secret decrypt <yoursecret>
 ```
 To get the decrypted secret back to use in an application.
 
