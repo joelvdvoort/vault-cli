@@ -64,32 +64,32 @@ To create a ReadOnly token for use in a cluster, run the following command:
 A ReadOnly type token can only decrypt secrets of which an id or name are known. This type cannot manage secrets.
 
 ## Usage example
-```shell
-./vault-cli secret list
-```
-Will print all secrets in the Vault environment
-
-### List all tokens (only available to EnvironmentAdmin type tokens)
+### List all tokens 
+- Only available to EnvironmentAdmin type tokens
 ```shell
 ./vault-cli token list
 ```
 
-### List all secrets (only available to ReadWrite type tokens)
+### List all secrets
+- Only available to ReadWrite type tokens
 ```shell
 ./vault-cli secret list
 ```
 
-### Create a secret (only available to ReadWrite type tokens)
+### Create a secret 
+- Only available to ReadWrite type tokens
 ```shell
 ./vault-cli secret create --description "Example secret" --secret "SuperSecurePassword"
 ```
 
-### Delete a secret (only available to ReadWrite type tokens)
+### Delete a secret
+- Only available to ReadWrite type tokens
 ```shell
 ./vault-cli secret delete <id or description of the secret>
 ```
 
-### Decrypt a secret (only available to ReadWrite and ReadOnly type tokens)
+### Decrypt a secret
+- Only available to ReadWrite and ReadOnly type tokens
 ```shell
 ./vault-cli secret decrypt <id or description of the secret>
 ```
