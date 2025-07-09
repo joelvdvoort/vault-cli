@@ -75,7 +75,7 @@ func printJson(input any) {
 
 func printTable(headers []string, content []interface{}) {
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader(headers)
+	table.Header(headers)
 
 	for _, row := range content {
 		var rowValues []string
