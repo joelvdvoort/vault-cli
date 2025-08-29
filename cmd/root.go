@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/olekukonko/tablewriter"
 	"github.com/previder/vault-cli/pkg"
 	"github.com/spf13/cobra"
@@ -70,7 +71,7 @@ func setupClient(cmd *cobra.Command, args []string) {
 
 func printJson(input any) {
 	marshal, _ := json.MarshalIndent(input, "", "  ")
-	println(string(marshal))
+	fmt.Println(string(marshal))
 }
 
 func printTable(headers []string, content []interface{}) {
