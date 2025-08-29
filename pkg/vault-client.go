@@ -85,7 +85,6 @@ func (v *VaultClient) request(method string, url string, requestBody interface{}
 		return err
 	}
 	req, err := http.NewRequest(method, v.baseUri+url, b)
-	log.Println("Requesting", v.baseUri+url)
 	if err != nil {
 		return err
 	}
