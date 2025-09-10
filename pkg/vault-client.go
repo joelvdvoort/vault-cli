@@ -26,6 +26,7 @@ type PreviderVaultClient interface {
 	GetToken(id string) (*model.Token, error)
 	CreateToken(create model.TokenCreate) (*model.TokenCreateResponse, error)
 	DeleteToken(id string) error
+	GetTokenInfo() (*model.Token, error)
 
 	GetSecrets() ([]model.Secret, error)
 	GetSecret(id string) (*model.Secret, error)
@@ -65,10 +66,6 @@ func (v *VaultClient) SetVerbose(verbose bool) {
 
 func (v *VaultClient) validateConnection() error {
 	version := model.Version{Version: "test"}
-	/*	err := v.request("GET", "/version", nil, version)
-		if err != nil {
-			return err
-		}*/
 	if v.verbose {
 		log.Println(fmt.Sprintf("Setup new Vault client [%v] to %v", version.Version, v.baseUri))
 	}
@@ -113,7 +110,8 @@ func (v *VaultClient) request(method string, url string, requestBody interface{}
 
 	if res.StatusCode < 200 || res.StatusCode >= 300 {
 		if res.StatusCode == 401 {
-			log.Fatal("Unauthorized")
+			log.Println("Vault token is not authorized to read and decrypt secrets")
+			return errors.New(fmt.Sprintf("vault token is not authorized to read and decrypt secrets"))
 		}
 		log.Printf("An error was returned: %v, %v\n", res.StatusCode, res.Body)
 	}

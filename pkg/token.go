@@ -39,3 +39,12 @@ func (v *VaultClient) DeleteToken(id string) error {
 	}
 	return nil
 }
+
+func (v *VaultClient) GetTokenInfo() (*model.Token, error) {
+	var result model.Token
+	err := v.request("GET", fmt.Sprintf("/token/info"), nil, &result)
+	if err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
