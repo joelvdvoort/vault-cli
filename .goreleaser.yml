@@ -21,6 +21,7 @@ builds:
       - '-s -w -X main.version={{.Version}} -X main.commit={{.Commit}}'
     goos:
       - windows
+      - darwin
       - linux
     goarch:
       - amd64
